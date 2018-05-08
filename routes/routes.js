@@ -1,10 +1,13 @@
 var express = require('express');
 var app = express();
-
+var router = express.Router();
 
 app.set("view engine", "ejs");
 
-app.get("/", function(req,res){
+router.get("/", function(req,res){
 	console.log("Someone connected to home")
-	res.render("/views/homepage");
+	res.render("homepage");
+
 });
+
+module.exports = router;
