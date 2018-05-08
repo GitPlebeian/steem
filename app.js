@@ -1,13 +1,10 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 
-var routes = require("./routes")
+var routes = require("./routes/routes")
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(clientSessions({
-  secret: 'fjpasidfjpasifj'
-}));
 
 app.use('/', express.static('./'));
 app.use('/js', express.static('./public/js'));
