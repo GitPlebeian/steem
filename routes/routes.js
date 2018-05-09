@@ -24,73 +24,63 @@ router.use(session({
   resave: true,
   saveUninitialized: true
 }));
-//var User = require("./models/user");
-
-router.use(function(req, res, next) {
-  res.locals.currentUserjy = req.user;
-  res.locals.errors = req.flash("error");
-  res.locals.infos = req.flash("info");
-  next();
-});
 
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get("/successroot", function(req, res) {
-console.log("get successroot");
-	res.json({redirect:"/"});	
-});
+// router.get("/successroot", function(req, res) {
+// console.log("get successroot");
+// 	res.json({redirect:"/"});	
+// });
 
-router.get("/failroot", function(req, res) {
-console.log("get failroot");
-	res.json({redirect:"/login"});	
-});
+// router.get("/failroot", function(req, res) {
+// console.log("get failroot");
+// 	res.json({redirect:"/login"});	
+// });
 
-router.get("/successsignup", function(req, res) {
-console.log("get successsignup");
-	res.json({redirect:"/session"});	
-});
+// router.get("/successsignup", function(req, res) {
+// console.log("get successsignup");
+// 	res.json({redirect:"/session"});	
+// });
 
-router.get("/failsignup", function(req, res) {
-console.log("get failsignup");
-	res.json({redirect:"/login"});	
-});
+// router.get("/failsignup", function(req, res) {
+// console.log("get failsignup");
+// 	res.json({redirect:"/login"});	
+// });
 
-router.get("/successlogin", function(req, res) {
-console.log("get successsignup");
-	res.json({redirect:"/session"});	
-});
-router.get("/faillogin", function(req, res) {
-console.log("get failsignup");
-	res.json({redirect:"/login"});	
+// router.get("/successlogin", function(req, res) {
+// console.log("get successsignup");
+// 	res.json({redirect:"/session"});	
+// });
+// router.get("/faillogin", function(req, res) {
+// console.log("get failsignup");
+// 	res.json({redirect:"/login"});	
 
-});
-
-
+// // });
 
 router.get("/", function(req, res, next) {
 console.log("get root");
 	let thePath = path.resolve(__dirname,"public/views/homepage.ejs");		
 	res.render('homepage');	
+})
+//  // User.find()
+//  // .sort({ createdAt: "descending" })
+//  // .exec(function(err, users) {
+//  //   if (err) { return next(err); }
+//  //   res.render("index", { users: users });
+//  // });
+// });
 
- // User.find()
- // .sort({ createdAt: "descending" })
- // .exec(function(err, users) {
- //   if (err) { return next(err); }
- //   res.render("index", { users: users });
- // });
-});
 
-
-router.get("/signup", function(req, res) {
-console.log("get signup");
+ router.get("/signup", function(req, res) {
+ console.log("get signup");
 
 	res.render('signup')	
 
-});
+ });
 
-router.get("/login", function(req, res) {
-console.log("get login");
+ router.get("/login", function(req, res) {
+ console.log("get login");
 
 	res.render('login')	
 
@@ -99,99 +89,111 @@ router.get("/discussions", function(req, res) {
 console.log("get login");
 
 	res.render('discussions')	
-
-});
-
-
-router.get("/session", function(req, res) {
-  console.log("get session");
-  if (req.isAuthenticated()) {
-	let thePath = path.resolve(__dirname,"public/views/session.ejs");		
-	res.render(thePath);	
-  } else {
-  	let thePath = path.resolve(__dirname,"public/views/login.ejs");		
-	res.render(thePath);	
-  }
-});
-
-router.get("/userInfo",function(req,res){
-     if (req.isAuthenticated()) {
-		res.json({username:req.user.username});
-	}
-	else {
-		res.json(null);
-	}
-});
+ });
 
 
+// <<<<<<< HEAD
+// router.get("/session", function(req, res) {
+//   console.log("get session");
+//   if (req.isAuthenticated()) {
+// 	let thePath = path.resolve(__dirname,"public/views/session.ejs");		
+// 	res.render(thePath);	
+//   } else {
+//   	let thePath = path.resolve(__dirname,"public/views/login.ejs");		
+// 	res.render(thePath);	
+//   }
+// });
+// =======
+// router.get("/session", function(req, res) {
+//   console.log("get session");
+//   if (req.isAuthenticated()) {
+// 	let thePath = path.resolve(__dirname,"public/views/session.html");		
+// 	res.sendFile(thePath);	
+//   } else {
+//   	let thePath = path.resolve(__dirname,"public/views/login.html");		
+// 	res.sendFile(thePath);	
+//   }
+// });
+// >>>>>>> d30b7edfc849875a85c12a9d08759fe165ab053c
 
-
-router.get("/logout", function(req, res) {
-  if (req.isAuthenticated()) {
-    req.logout();
-    res.redirect("/successroot");
-  } else {
-    res.redirect("/failroot");
-  }
-});
-
-router.post("/signup", function(req, res, next) {
-console.log("post signup");
-
-  var username = req.body.username;
-  var password = req.body.password;
-
-  User.findOne({ username: username }, function(err, user) {
-
-    if (err) { return next(err); }
-    if (user) {
-      req.flash("error", "User already exists");
-      return res.redirect("/failsignup");
-    }
-console.log("post signup1");
-
-    var newUser = new User({
-      username: username,
-      password: password
-    });
-console.log("post signup2");
-
-    newUser.save(next);    //this line has to be called.
-console.log("post signup done");
-
-  });
-
-
-}, passport.authenticate("login", {
-  successRedirect: "/successsignup",
-  failureRedirect: "/failsignup",
-  failureFlash: true
-}));
+// router.get("/userInfo",function(req,res){
+//      if (req.isAuthenticated()) {
+// 		res.json({username:req.user.username});
+// 	}
+// 	else {
+// 		res.json(null);
+// 	}
+// });
 
 
 
 
-router.post("/login", passport.authenticate("login", {
-  successRedirect: "/successlogin",
-  failureRedirect: "/faillogin",
-  failureFlash: true
-}));
+// router.get("/logout", function(req, res) {
+//   if (req.isAuthenticated()) {
+//     req.logout();
+//     res.redirect("/successroot");
+//   } else {
+//     res.redirect("/failroot");
+//   }
+// });
+
+// router.post("/signup", function(req, res, next) {
+// console.log("post signup");
+
+//   var username = req.body.username;
+//   var password = req.body.password;
+
+//   User.findOne({ username: username }, function(err, user) {
+
+//     if (err) { return next(err); }
+//     if (user) {
+//       req.flash("error", "User already exists");
+//       return res.redirect("/failsignup");
+//     }
+// console.log("post signup1");
+
+//     var newUser = new User({
+//       username: username,
+//       password: password
+//     });
+// console.log("post signup2");
+
+//     newUser.save(next);    //this line has to be called.
+// console.log("post signup done");
+
+//   });
 
 
-app.set("view engine", "ejs");
+// }, passport.authenticate("login", {
+//   successRedirect: "/successsignup",
+//   failureRedirect: "/failsignup",
+//   failureFlash: true
+// }));
 
-router.get("/", function(req,res){
-	res.render("homepage");
-});
-router.get("/login", function(req,res){
-	res.render("login");
-});
-router.get("/signup", function(req,res){
-	res.render("signup");
-});
-router.get("/discussions", function(req,res){
-	res.render("discussions");
-});
+
+
+
+// router.post("/login", passport.authenticate("login", {
+//   successRedirect: "/successlogin",
+//   failureRedirect: "/faillogin",
+//   failureFlash: true
+// }));
+
+
+// app.set("view engine", "ejs");
+
+// router.get("/", function(req,res){
+// 	res.render("homepage");
+// });
+// router.get("/login", function(req,res){
+// 	res.render("login");
+// });
+// router.get("/signup", function(req,res){
+// 	res.render("signup");
+// });
+// router.get("/discussions", function(req,res){
+// 	res.render("discussions");
+// });
 
 
 module.exports = router;
