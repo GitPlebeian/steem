@@ -92,29 +92,16 @@ console.log("get login");
  });
 
 
-// <<<<<<< HEAD
+//
 // router.get("/session", function(req, res) {
 //   console.log("get session");
 //   if (req.isAuthenticated()) {
-// 	let thePath = path.resolve(__dirname,"public/views/session.ejs");		
-// 	res.render(thePath);	
-//   } else {
-//   	let thePath = path.resolve(__dirname,"public/views/login.ejs");		
-// 	res.render(thePath);	
+// 	res.render('homepage');	
+//   } else {	
+// 	res.render('login');	
 //   }
 // });
-// =======
-// router.get("/session", function(req, res) {
-//   console.log("get session");
-//   if (req.isAuthenticated()) {
-// 	let thePath = path.resolve(__dirname,"public/views/session.html");		
-// 	res.sendFile(thePath);	
-//   } else {
-//   	let thePath = path.resolve(__dirname,"public/views/login.html");		
-// 	res.sendFile(thePath);	
-//   }
-// });
-// >>>>>>> d30b7edfc849875a85c12a9d08759fe165ab053c
+// 
 
 // router.get("/userInfo",function(req,res){
 //      if (req.isAuthenticated()) {
