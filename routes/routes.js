@@ -1,10 +1,29 @@
 var express = require('express');
 var passport = require("passport");
 var path = require("path");
+var flash = require("connect-flash");
+var mongoose = require("mongoose");
+var passport = require("passport");
+var path = require("path");
+var session = require("express-session");
+var bodyParser = require('body-parser')
+var cookieParser = require("cookie-parser");
 
 var app = express();
 var router = express.Router();
 
+router.use(express.static(path.join(__dirname, "public")));
+
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(cookieParser());
+
+router.use(flash());
+
+router.use(session({
+  secret: "LUp$Dg?,I#i&owP3=9su+OB%`JgL4muLF5YJ~{;t",
+  resave: true,
+  saveUninitialized: true
+}));
 //var User = require("./models/user");
 
 router.use(function(req, res, next) {
@@ -14,6 +33,8 @@ router.use(function(req, res, next) {
   next();
 });
 
+router.use(passport.initialize());
+router.use(passport.session());
 
 router.get("/successroot", function(req, res) {
 console.log("get successroot");
@@ -49,8 +70,8 @@ console.log("get failsignup");
 
 router.get("/", function(req, res, next) {
 console.log("get root");
-	let thePath = path.resolve(__dirname,"public/views/login.html");		
-	res.sendFile(thePath);	
+	let thePath = path.resolve(__dirname,"public/views/homepage.ejs");		
+	res.render('homepage');	
 
  // User.find()
  // .sort({ createdAt: "descending" })
@@ -64,16 +85,20 @@ console.log("get root");
 router.get("/signup", function(req, res) {
 console.log("get signup");
 
-	let thePath = path.resolve(__dirname,"public/views/signup.html");		
-	res.sendFile(thePath);	
+	res.render('signup')	
 
 });
 
 router.get("/login", function(req, res) {
 console.log("get login");
 
-	let thePath = path.resolve(__dirname,"public/views/login.html");		
-	res.sendFile(thePath);	
+	res.render('login')	
+
+});
+router.get("/discussions", function(req, res) {
+console.log("get login");
+
+	res.render('discussions')	
 
 });
 
@@ -81,11 +106,11 @@ console.log("get login");
 router.get("/session", function(req, res) {
   console.log("get session");
   if (req.isAuthenticated()) {
-	let thePath = path.resolve(__dirname,"public/views/session.html");		
-	res.sendFile(thePath);	
+	let thePath = path.resolve(__dirname,"public/views/session.ejs");		
+	res.render(thePath);	
   } else {
-  	let thePath = path.resolve(__dirname,"public/views/login.html");		
-	res.sendFile(thePath);	
+  	let thePath = path.resolve(__dirname,"public/views/login.ejs");		
+	res.render(thePath);	
   }
 });
 
