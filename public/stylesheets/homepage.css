@@ -29,6 +29,14 @@ h1,h2,h3,h4,h5,h6{
 	padding: 8px;
 	background-color: #d79268;
 }
+.themedContainerHeader{
+	background-color: #a87150;
+	padding: 8px;
+}
+.themedContainerHeader h2{
+	text-align: center;
+	margin: 0;
+}
 .navbar{
 	height: 38.52px;
 	overflow: visible;
