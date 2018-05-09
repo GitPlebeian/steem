@@ -5,14 +5,22 @@ var router = express.Router();
 var passport = require("passport");
 var path = require("path");
 
-var User = require("./models/user");
+// var User = require("./models/user");
 
 app.set("view engine", "ejs");
 
 router.get("/", function(req,res){
-	console.log("Someone connected to home")
 	res.render("homepage");
-
 });
+router.get("/login", function(req,res){
+	res.render("login");
+});
+router.get("/signup", function(req,res){
+	res.render("signup");
+});
+router.get("/discussions", function(req,res){
+	res.render("discussions");
+});
+
 
 module.exports = router;
