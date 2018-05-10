@@ -9,7 +9,6 @@ var session = require("express-session");
 
 var setUpPassport = require("./setuppassport");
 
-// var User = require("./models/user");
 var routes = require("./routes/routes")
 var app = express();
 

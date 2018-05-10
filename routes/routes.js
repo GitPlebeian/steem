@@ -12,6 +12,8 @@ var cookieParser = require("cookie-parser");
 var app = express();
 var router = express.Router();
 
+var User = require("../models/user");
+
 router.use(express.static(path.join(__dirname, "public")));
 
 router.use(bodyParser.urlencoded({ extended: false }));
@@ -28,35 +30,35 @@ router.use(session({
 router.use(passport.initialize());
 router.use(passport.session());
 
-// router.get("/successroot", function(req, res) {
-// console.log("get successroot");
-// 	res.json({redirect:"/"});	
-// });
+router.get("/successroot", function(req, res) {
+console.log("get successroot");
+	res.json({redirect:"/"});	
+});
 
-// router.get("/failroot", function(req, res) {
-// console.log("get failroot");
-// 	res.json({redirect:"/login"});	
-// });
+router.get("/failroot", function(req, res) {
+console.log("get failroot");
+	res.json({redirect:"/login"});	
+});
 
-// router.get("/successsignup", function(req, res) {
-// console.log("get successsignup");
-// 	res.json({redirect:"/session"});	
-// });
+router.get("/successsignup", function(req, res) {
+console.log("get successsignup");
+	res.json({redirect:"/session"});	
+});
 
-// router.get("/failsignup", function(req, res) {
-// console.log("get failsignup");
-// 	res.json({redirect:"/login"});	
-// });
+router.get("/failsignup", function(req, res) {
+console.log("get failsignup");
+	res.json({redirect:"/login"});	
+});
 
-// router.get("/successlogin", function(req, res) {
-// console.log("get successsignup");
-// 	res.json({redirect:"/session"});	
-// });
-// router.get("/faillogin", function(req, res) {
-// console.log("get failsignup");
-// 	res.json({redirect:"/login"});	
+router.get("/successlogin", function(req, res) {
+console.log("get successsignup");
+	res.json({redirect:"/session"});	
+});
+router.get("/faillogin", function(req, res) {
+console.log("get failsignup");
+	res.json({redirect:"/login"});	
 
-// // });
+});
 
 router.get("/", function(req, res, next) {
 console.log("get root");
@@ -93,81 +95,81 @@ console.log("get discussions");
 
 
 //
-// router.get("/session", function(req, res) {
-//   console.log("get session");
-//   if (req.isAuthenticated()) {
-// 	res.render('homepage');	
-//   } else {	
-// 	res.render('login');	
-//   }
-// });
-// 
-
-// router.get("/userInfo",function(req,res){
-//      if (req.isAuthenticated()) {
-// 		res.json({username:req.user.username});
-// 	}
-// 	else {
-// 		res.json(null);
-// 	}
-// });
+router.get("/session", function(req, res) {
+  console.log("get session");
+  if (req.isAuthenticated()) {
+	res.render('homepage');	
+  } else {	
+	res.render('login');	
+  }
+});
 
 
-
-
-// router.get("/logout", function(req, res) {
-//   if (req.isAuthenticated()) {
-//     req.logout();
-//     res.redirect("/successroot");
-//   } else {
-//     res.redirect("/failroot");
-//   }
-// });
-
-// router.post("/signup", function(req, res, next) {
-// console.log("post signup");
-
-//   var username = req.body.username;
-//   var password = req.body.password;
-
-//   User.findOne({ username: username }, function(err, user) {
-
-//     if (err) { return next(err); }
-//     if (user) {
-//       req.flash("error", "User already exists");
-//       return res.redirect("/failsignup");
-//     }
-// console.log("post signup1");
-
-//     var newUser = new User({
-//       username: username,
-//       password: password
-//     });
-// console.log("post signup2");
-
-//     newUser.save(next);    //this line has to be called.
-// console.log("post signup done");
-
-//   });
-
-
-// }, passport.authenticate("login", {
-//   successRedirect: "/successsignup",
-//   failureRedirect: "/failsignup",
-//   failureFlash: true
-// }));
+router.get("/userInfo",function(req,res){
+     if (req.isAuthenticated()) {
+		res.json({username:req.user.username});
+	}
+	else {
+		res.json(null);
+	}
+});
 
 
 
 
-// router.post("/login", passport.authenticate("login", {
-//   successRedirect: "/successlogin",
-//   failureRedirect: "/faillogin",
-//   failureFlash: true
-// }));
+router.get("/logout", function(req, res) {
+  if (req.isAuthenticated()) {
+    req.logout();
+    res.redirect("/successroot");
+  } else {
+    res.redirect("/failroot");
+  }
+});
+
+router.post("/signup", function(req, res, next) {
+console.log("post signup");
+
+  var username = req.body.username;
+  var password = req.body.password;
+
+  User.findOne({ username: username }, function(err, user) {
+
+    if (err) { return next(err); }
+    if (user) {
+      req.flash("error", "User already exists");
+      return res.redirect("/failsignup");
+    }
+console.log("post signup1");
+
+    var newUser = new User({
+      username: username,
+      password: password
+    });
+console.log("post signup2");
+
+    newUser.save(next);    //this line has to be called.
+console.log("post signup done");
+
+  });
 
 
-// app.set("view engine", "ejs");
+}, passport.authenticate("login", {
+  successRedirect: "/successsignup",
+  failureRedirect: "/failsignup",
+  failureFlash: true
+}));
+
+
+
+
+router.post("/login", passport.authenticate("login", {
+  successRedirect: "/successlogin",
+  failureRedirect: "/faillogin",
+  failureFlash: true
+}));
+
+
+app.set("view engine", "ejs");
 
 // router.get("/", function(req,res){
 // 	res.render("homepage");

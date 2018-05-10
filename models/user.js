@@ -1,6 +1,8 @@
 var bcrypt = require("bcrypt-nodejs");
 var SALT_FACTOR = 10;
 
+console.log("wadu hek");
+
 var mongoose = require("mongoose");
 
 var userSchema = mongoose.Schema({
