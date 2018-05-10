@@ -7,6 +7,24 @@ body{
 	box-sizing: border-box;
 	font-size: 18px;
 }
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #d79268; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #a87150; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #a87150; 
+}
 h1,h2,h3,h4,h5,h6{
 	font-weight: normal;
 }
@@ -17,6 +35,18 @@ h1,h2,h3,h4,h5,h6{
 #logo{
 	width: 100%;
 	/* 50FFB1 */
+}
+#message{
+	border: solid 1px #a87150;
+	padding: 6px;
+	border-radius: 0px;
+	width: 100%;
+	box-sizing: border-box;
+	font-family: 'Roboto', sans-serif;
+	font-size: 18px;
+}
+#message:focus{
+	outline: none;
 }
 .everything{
 	max-width: 800px;
@@ -38,18 +68,19 @@ h1,h2,h3,h4,h5,h6{
 	margin: 0;
 }
 .discussionsText{
-	max-height: 400px;
+	height: 400px;
 	overflow: auto;
+	margin-bottom: 8px;
 }
 .discussionsText p{
 	margin: 0;
 	display: block;
 }
 hr{
-	border: 1px solid #a87150;
-	width: 70%;
+	border: 0.5px solid #a87150;
+	/*width: 70%;*/
 	position: relative;
-	left: -30%;
+	/*left: -30%;*/
 	display: block;
 }
 .navbar{
