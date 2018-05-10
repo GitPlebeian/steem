@@ -86,7 +86,7 @@ console.log("get root");
 
 });
 router.get("/discussions", function(req, res) {
-console.log("get login");
+console.log("get discussions");
 
 	res.render('discussions')	
  });

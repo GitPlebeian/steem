@@ -22,7 +22,6 @@ app.use('/views', express.static('./views'));
 app.use('/stylesheets', express.static('./public/stylesheets'));
 app.use('/images', express.static('./public/images'));
 app.use('/models', express.static('./models'));
-
 // app.use(express.static(path.join(__dirname, "public")));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,6 +43,14 @@ app.use(routes);
 app.set("view engine", "ejs");
 
 var port = process.env.PORT || 3000;
-app.listen(port,function(){
+var server = app.listen(port,function(){
   console.log('Starting server on port ' + port)
 });
+
+var io = require('socket.io').listen(server)
+
+io.on('connection', function(socket){
+	socket.on('chat message', function(msg){
+		io.emit('chat message', msg)
+	})
+})
