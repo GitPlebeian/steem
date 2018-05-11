@@ -11,21 +11,27 @@ var cookieParser = require("cookie-parser");
 
 var app = express();
 var router = express.Router();
-
-var User = require("../models/user");
-
-router.use(express.static(path.join(__dirname, "public")));
-
-router.use(bodyParser.urlencoded({ extended: false }));
-router.use(cookieParser());
-
 router.use(flash());
+var User = require("../models/user");
 
 router.use(session({
   secret: "LUp$Dg?,I#i&owP3=9su+OB%`JgL4muLF5YJ~{;t",
   resave: true,
   saveUninitialized: true
 }));
+
+router.use(function(req, res, next) {
+  res.locals.currentUserjy = req.user;
+  res.locals.errors = req.flash("error");
+  res.locals.infos = req.flash("info");
+  next();
+});
+
+router.use(express.static(path.join(__dirname, "public")));
+
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(cookieParser());
+
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -62,7 +68,6 @@ console.log("get failsignup");
 
 router.get("/", function(req, res, next) {
 console.log("get root");
-	let thePath = path.resolve(__dirname,"public/views/homepage.ejs");		
 	res.render('homepage');	
 })
 //  // User.find()
@@ -132,6 +137,7 @@ console.log("post signup");
   var username = req.body.username;
   var password = req.body.password;
 
+  console.log('User Signing up')
   User.findOne({ username: username }, function(err, user) {
 
     if (err) { return next(err); }
@@ -186,3 +192,4 @@ app.set("view engine", "ejs");
 
 
 module.exports = router;
+

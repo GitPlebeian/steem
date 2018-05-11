@@ -11,7 +11,8 @@ var setUpPassport = require("./setuppassport");
 
 var routes = require("./routes/routes")
 var app = express();
-
+setUpPassport();
+mongoose.connect("mongodb://localhost:27017/steamdb");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(routes);
