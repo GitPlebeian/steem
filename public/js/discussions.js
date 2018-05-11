@@ -9,7 +9,7 @@ $('form').submit(function(){
 		div.innerHTML = html;
 		var text = div.textContent || div.innerText || "";
 
-		socket.emit('chat message', text;
+		socket.emit('chat message', text);
   		$('#message').val('');
 	}
 	return false;
