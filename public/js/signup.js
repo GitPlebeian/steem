@@ -21,7 +21,6 @@ pass2.keyup(function(){
 	}
 })
 $('body').keydown( function( event ) {
-  console.log('suck a dkick')
     if ( event.which === 13 ) {
       $('form').submit()
     }

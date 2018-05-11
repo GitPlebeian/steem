@@ -26,3 +26,11 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block"; 
   dots[slideIndex-1].className += " active";
 }
+
+if (window.location.href.match('/') != null) {
+	$.get("/userInfo",function(data){
+		console.log("I am calling userinfo");
+		if (data.username)
+			$("#session").html("Session " + data.username);
+	});
+}

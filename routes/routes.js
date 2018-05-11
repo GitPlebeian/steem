@@ -38,31 +38,31 @@ router.use(passport.session());
 
 router.get("/successroot", function(req, res) {
 console.log("get successroot");
-	res.json({redirect:"/"});	
+	res.render('homage');
 });
 
 router.get("/failroot", function(req, res) {
 console.log("get failroot");
-	res.json({redirect:"/login"});	
+	res.render('login');
 });
 
 router.get("/successsignup", function(req, res) {
 console.log("get successsignup");
-	res.json({redirect:"/session"});	
+	res.render('homepage');
 });
 
 router.get("/failsignup", function(req, res) {
 console.log("get failsignup");
-	res.json({redirect:"/login"});	
+	res.render('login');	
 });
 
 router.get("/successlogin", function(req, res) {
 console.log("get successsignup");
-	res.json({redirect:"/session"});	
+	res.render('homepage');	
 });
 router.get("/faillogin", function(req, res) {
 console.log("get failsignup");
-	res.json({redirect:"/login"});	
+	res.render('login');	
 
 });
 
@@ -111,7 +111,9 @@ router.get("/session", function(req, res) {
 
 
 router.get("/userInfo",function(req,res){
+  console.log("routes userinfo");
      if (req.isAuthenticated()) {
+      console.log("I am authenticated");
 		res.json({username:req.user.username});
 	}
 	else {
