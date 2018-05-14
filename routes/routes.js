@@ -38,31 +38,31 @@ router.use(passport.session());
 
 router.get("/successroot", function(req, res) {
 console.log("get successroot");
-	res.render('homage');
+	res.redirect('/');
 });
 
 router.get("/failroot", function(req, res) {
 console.log("get failroot");
-	res.render('login');
+	res.redirect('/login');
 });
 
 router.get("/successsignup", function(req, res) {
 console.log("get successsignup");
-	res.render('homepage');
+	res.redirect('/');
 });
 
 router.get("/failsignup", function(req, res) {
 console.log("get failsignup");
-	res.render('login');	
+	res.redirect('/login');	
 });
 
 router.get("/successlogin", function(req, res) {
 console.log("get successsignup");
-	res.render('homepage');	
+	res.redirect('/');	
 });
 router.get("/faillogin", function(req, res) {
 console.log("get failsignup");
-	res.render('login');	
+	res.render('login');
 
 });
 
@@ -81,21 +81,33 @@ console.log("get root");
 
  router.get("/signup", function(req, res) {
  console.log("get signup");
-
-	res.render('signup')	
+  if(req.isAuthenticated()){
+    res.redirect('/');
+  } else {
+    res.render('signup')
+  }
+		
 
  });
 
  router.get("/login", function(req, res) {
  console.log("get login");
 
-	res.render('login')	
+	if(req.isAuthenticated()){
+    res.redirect('/');
+  } else {
+    res.render('login')
+  }
 
 });
 router.get("/discussions", function(req, res) {
 console.log("get discussions");
-
-	res.render('discussions')	
+  if(req.isAuthenticated()){
+    res.render('discussions')
+  } else {
+    res.redirect('/login')
+  }
+		
  });
 
 
