@@ -29,10 +29,8 @@ function showSlides(n) {
 
 if (window.location.href.match('/') != null) {
 	$.get("/userInfo",function(data){
-		if (data){
-			$("#logout").css('display','block');
-      $('#login').css('display', 'none')
-      $('#signup').css('display', 'none')
-    }
+		console.log("I am calling userinfo");
+		if (data.username)
+			$("#session").html("Session " + data.username);
 	});
 }

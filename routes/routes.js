@@ -101,8 +101,10 @@ console.log("get root");
 
 });
 router.get("/discussions", function(req, res) {
-console.log("get discussions");
   if(req.isAuthenticated()){
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    console.log(ip.slice(6))
+    
     res.render('discussions')
   } else {
     res.redirect('/login')
