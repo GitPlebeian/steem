@@ -11,17 +11,14 @@ body{
     width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     background: #d79268; 
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     background: #a87150; 
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #a87150; 
 }
@@ -37,7 +34,8 @@ h1,h2,h3,h4,h5,h6{
 	/* 50FFB1 */
 }
 #message{
-	border: solid 1px #a87150;
+	border: none;
+	/*border: solid 1px #a87150;*/
 	padding: 6px;
 	border-radius: 0px;
 	width: 100%;

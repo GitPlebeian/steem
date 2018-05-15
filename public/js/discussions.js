@@ -1,4 +1,6 @@
 var socket = io()
+var numSent = 0
+var sent = true
 
 $('form').submit(function(){
 	if($('#message').val() == ''){
@@ -6,7 +8,7 @@ $('form').submit(function(){
 	} else {
 		var username
 		$.get("/userInfo",function(data){
-			if (data) {
+			if (data && sent) {
 
 				username = data.username
 				var html = $('#message').val();
@@ -16,6 +18,11 @@ $('form').submit(function(){
 
 				socket.emit('chat message',text,username);
   				$('#message').val('');
+
+  				numSent++;
+  				if(numSent > 3){
+  					
+  				}
 			}
 				
 		});
