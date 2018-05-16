@@ -66,6 +66,10 @@ console.log("get failsignup");
 
 });
 
+router.get("/admin",function(req,res){
+  res.render('admin');
+});
+
 router.get("/", function(req, res, next) {
 console.log("get root");
 	res.render('homepage');	
@@ -200,6 +204,32 @@ router.post("/login", passport.authenticate("login", {
   failureFlash: true
 }));
 
+router.get("/getUsernames",function(req,res){
+  User.find({},function(error,user) {
+  if (error) {
+    return res.json(null);
+  } else {
+    let objs = [];
+    for (let i=0;i<user.length;i++) {
+      objs.push({username:user[i].username});
+    }
+    return res.json(objs);
+  }
+});
+
+});
+
+router.delete('/deleteLogin/:username', function(req, res){
+
+    User.remove({username:req.params.username},function(error,removed) {
+        if (error) {
+            return res.json(null);
+        }
+        return res.json(req.params.username);
+    });
+
+//  res.json(db.deleteObjectWithID(req.params.ident));
+});
 
 app.set("view engine", "ejs");
 
