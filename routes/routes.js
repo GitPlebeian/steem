@@ -78,6 +78,16 @@ console.log("get root");
 //  // });
 // });
 
+ router.get("/friends", function(req, res) {
+ console.log("get friends");
+  if(!req.isAuthenticated()){
+    res.redirect('/login');
+  } else {
+    res.render('friends')
+  }
+    
+
+ });
 
  router.get("/signup", function(req, res) {
  console.log("get signup");
