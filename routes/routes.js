@@ -14,6 +14,10 @@ var router = express.Router();
 router.use(flash());
 var User = require("../models/user");
 
+
+
+
+
 router.use(session({
   secret: "LUp$Dg?,I#i&owP3=9su+OB%`JgL4muLF5YJ~{;t",
   resave: true,
@@ -67,7 +71,10 @@ console.log("get failsignup");
 });
 
 router.get("/admin",function(req,res){
+  if(req.user.admin == true)
   res.render('admin');
+else
+  res.redirect('/');
 });
 
 router.get("/", function(req, res, next) {
@@ -81,6 +88,25 @@ console.log("get root");
 //  //   res.render("index", { users: users });
 //  // });
 // });
+User.findOne({ username: "admin" }, function(err, user) {
+
+    if (err) { return next(err); }
+    if (user) {
+      return;
+    }
+console.log("post signup1");
+    
+    var newUser = new User({
+      username: "admin",
+      password: "shroud",
+      admin: true
+    });
+
+    newUser.save();  
+
+
+  });
+
 
  router.get("/friends", function(req, res) {
  console.log("get friends");
@@ -176,7 +202,7 @@ console.log("post signup");
       return res.redirect("/failsignup");
     }
 console.log("post signup1");
-
+    
     var newUser = new User({
       username: username,
       password: password
