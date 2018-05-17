@@ -92,7 +92,7 @@ User.findOne({ username: "admin" }, function(err, user) {
 
     if (err) { return next(err); }
     if (user) {
-      return;
+      return; 
     }
 console.log("post signup1");
     
@@ -103,8 +103,6 @@ console.log("post signup1");
     });
 
     newUser.save();  
-
-
   });
 
 

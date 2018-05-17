@@ -53,6 +53,25 @@ router.post('/fileupload', function(req, res){
     });
 });
 
+// obj = [{description: "asdfpijapfoijpsadofji", itemname}]
+// for()
+// User.findOne({ username: obj[i].itemname }, function(err, user) {
 
+//     if (err) { return next(err); }
+//     if (user) {
+//       return;
+//     }
+// console.log("post signup1");
+    
+//     var newUser = new User({
+//       username: obj[i].itemname,
+//       password: "shroud",
+//       admin: true
+//     });
+
+//     newUser.save();  
+
+
+//   });
 module.exports = router;
 

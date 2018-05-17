@@ -3,6 +3,7 @@
           $("#errorMessage").html("A username must be entered")
         }
         else {
+          if($("#username").val() != "admin"){
           $.ajax({
             url: "/deleteLogin/" + $("#username").val(),
             type: "DELETE",
@@ -22,7 +23,7 @@
             dataType: "json"
           });
         }
-
+}
         return false;
       }
 
@@ -37,6 +38,7 @@
                 }
               else {
                 for(i=0;i<data.length;i++){
+                  if(data[i].username != "admin")
                   $("#usernameList").append(data[i].username + "</br>");
                 }
                   
