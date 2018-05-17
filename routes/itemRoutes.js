@@ -18,14 +18,14 @@ var router = express.Router();
 router.use(flash());
 var User = require("../models/games");
 
-
-
 let db = new data();
 
-router.get("/",function(req,res){
-      res.sendFile(__dirname + "/public/views/index.html");
-});
 
+router.get("/games", function(req, res) {
+    console.log("hek shroud");
+    res.render('addObject');
+  });
+    
 router.post('/upload', function(req, res){
 console.log("upload");
     res.json({});
