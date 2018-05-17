@@ -2,6 +2,16 @@ var socket = io()
 var numSent = 0
 var sent = true
 
+if (window.location.href.match('/') != null) {
+  $.get("/userInfo",function(data){
+   if (data){
+      $("#logout").css('display','block');
+      $('#login').css('display', 'none')
+      $('#signup').css('display', 'none')
+    }
+  })
+}
+
 $('form').submit(function(){
 	if($('#message').val() == ''){
 

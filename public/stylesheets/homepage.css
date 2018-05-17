@@ -88,7 +88,7 @@ img {
     display: none;
 }
 .mySlides img{
-	max-height: 400px;
+	max-width: 784px;
 	position: relative;
 	left: 50%;
 	transform: translate(-50%,0);
@@ -100,7 +100,7 @@ img {
   top: 50%;
   width: auto;
   transform: translate(0,-50%);
-  line-height: 422px;
+  line-height: 353px;
   padding: 0 17px;
   color: #fff;
   font-weight: bold;
@@ -132,11 +132,11 @@ img {
 /* The dots/bullets/indicators */
 .dot {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
+  height: 12px;
+  width: 20px;
+  margin: 0 1px;
   background-color: #a87150;
-  /*border-radius: 50%;*/
+  border-radius: 1px;
   display: inline-block;
 }
 
