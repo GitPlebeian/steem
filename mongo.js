@@ -70,8 +70,8 @@ Info.findOneAndUpdate({ident:obj.ident},{name:obj.name},function(error,info) {
 
 
 //add or modify.  Complete deleteObjectWithID function.
-myDatabase.prototype.deleteObjectWithID = function(_ident,res) {
-    Info.remove({ident:_ident},function(error,removed) {
+myDatabase.prototype.deleteObjectByName = function(_name,res) {
+    Info.remove({name:_name},function(error,removed) {
         if (error) {
             return res.json(null);
         }

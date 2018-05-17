@@ -10,6 +10,7 @@ var session = require("express-session");
 var setUpPassport = require("./setuppassport");
 
 var routes = require("./routes/routes")
+var itemRoutes = require("./routes/itemRoutes")
 var app = express();
 setUpPassport();
 mongoose.connect("mongodb://localhost:27017/steamdb");
