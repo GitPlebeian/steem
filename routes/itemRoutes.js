@@ -20,9 +20,9 @@ var User = require("../models/games");
 
 let db = new data();
 
+console.log("hek shroud");
 
 router.get("/games", function(req, res) {
-    console.log("hek shroud");
     res.render('addObject');
   });
     

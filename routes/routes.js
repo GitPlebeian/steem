@@ -271,5 +271,28 @@ app.set("view engine", "ejs");
 // });
 
 
+router.get("/games", function(req, res) {
+    res.render('addObject');
+  });
+
+router.post('/fileupload', function(req, res){
+
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+    var oldpath = files.filetoupload.path;
+    var newpath = __dirname + '/public/images/' + files.filetoupload.name;
+    var picturei =  '/public/images/' + files.filetoupload.name;
+
+    // console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
+
+     db.addObject({name:fields.name,price:fields.price,picture:picturei,description:fields.description,number:itemNumber});
+     itemNumber++;
+    fs.rename(oldpath, newpath, function (err) {
+    if (err) throw err;
+        res.redirect("/");
+      });
+    });
+});
+
 module.exports = router;
 
