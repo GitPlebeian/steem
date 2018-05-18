@@ -20,6 +20,11 @@ $('form').submit(function(){
 		$.get("/userInfo",function(data){
 			if (data && sent) {
 
+				var textStuff = $('#message').val()
+
+				if(textStuff.includes('<script>') || textStuff.includes('fuck')){
+					alert('You have been banned')
+				}
 				username = data.username
 				var html = $('#message').val();
 				var div = document.createElement("div");
