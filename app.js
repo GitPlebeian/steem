@@ -13,11 +13,12 @@ var routes = require("./routes/routes")
 var itemRoutes = require("./routes/itemRoutes")
 var app = express();
 setUpPassport();
-mongoose.connect("mongodb://localhost:27017/steamdb");
+mongoose.connect("mongodb://localhost:27017/steemdb");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(routes);
 app.use('/', express.static('./'));
+app.use('/routes', express.static('./'));
 app.use('/js', express.static('./public/js'));
 app.use('/views', express.static('./views'));
 app.use('/stylesheets', express.static('./public/stylesheets'));

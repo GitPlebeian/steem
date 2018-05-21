@@ -7,15 +7,17 @@ var passport = require("passport");
 var path = require("path");
 var session = require("express-session");
 var bodyParser = require('body-parser')
+var formidable = require('formidable');
 var cookieParser = require("cookie-parser");
 
+var fs = require('fs');
 var app = express();
 var router = express.Router();
 router.use(flash());
 var User = require("../models/user");
 
-
-
+var data = require('../mongo')
+let db = new data();
 
 
 router.use(session({
@@ -32,6 +34,7 @@ router.use(function(req, res, next) {
 });
 
 router.use(express.static(path.join(__dirname, "public")));
+
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(cookieParser());
@@ -280,14 +283,15 @@ router.post('/fileupload', function(req, res){
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.path;
+    console.log(oldpath)
     var newpath = __dirname + '/public/images/' + files.filetoupload.name;
+    console.log(newpath)
     var picturei =  '/public/images/' + files.filetoupload.name;
 
-    // console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
+    console.log('in post ' + fields.game + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
 
-     db.addObject({name:fields.name,price:fields.price,picture:picturei,description:fields.description,number:itemNumber});
-     itemNumber++;
-    fs.rename(oldpath, newpath, function (err) {
+    db.addObject({game:fields.game,price:fields.price,picture:picturei,description:fields.description});
+    fs.rename(oldpath, newpath, function () {
     if (err) throw err;
         res.redirect("/");
       });
