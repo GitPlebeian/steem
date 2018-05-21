@@ -64,8 +64,12 @@ console.log("get failsignup");
 });
 
 router.get("/successlogin", function(req, res) {
-console.log("get successsignup");
-	res.redirect('/');	
+  if(req.user.banned == true){
+    res.redirect('/faillogin');
+  } else{
+  console.log("get successsignup");
+  res.redirect('/');
+  }
 });
 router.get("/faillogin", function(req, res) {
 console.log("get failsignup");
@@ -190,7 +194,7 @@ router.get("/logout", function(req, res) {
 
 router.post("/signup", function(req, res, next) {
 console.log("post signup");
-
+  
   var username = req.body.username;
   var password = req.body.password;
 
@@ -203,10 +207,16 @@ console.log("post signup");
       return res.redirect("/failsignup");
     }
 console.log("post signup1");
-    
+    var ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
+    var newip = ip.slice(7,ip.length)
+    console.log("ip " + ip);
+    console.log("newip " + newip);
+
+
     var newUser = new User({
       username: username,
-      password: password
+      password: password,
+      ip: newip
     });
 console.log("post signup2");
 
@@ -257,6 +267,27 @@ router.delete('/deleteLogin/:username', function(req, res){
 
 //  res.json(db.deleteObjectWithID(req.params.ident));
 });
+
+router.post("/ban", function(req, res) {
+ console.log("get friends");
+  if(req.user.admin == true){
+    User.findOneAndUpdate({ip:req.body.ip},{banned:true},function(error,user) {
+          if (error) {
+              return res.json(null);
+          }
+          else if (user == null) {
+              return res.json(null);
+          }
+          return res.json("success");
+      });
+
+
+  } else {
+    
+  }
+    
+
+ });
 
 app.set("view engine", "ejs");
 
