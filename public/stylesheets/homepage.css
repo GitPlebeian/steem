@@ -34,6 +34,7 @@ img {
 .themedContainer{
 	padding: 8px;
 	background-color: #d79268;
+	margin-bottom: 10px;
 }
 .themedContainerHeader{
 	background-color: #a87150;
@@ -42,6 +43,28 @@ img {
 .themedContainerHeader h2{
 	text-align: center;
 	margin: 0;
+}
+.item{
+	width: calc(50% - 5px);
+	float: left;
+	margin-bottom: 10px;
+	background-color: #d79268;
+	padding: 8px;
+	height: 450px;
+	overflow: auto;
+}
+.item:nth-child(even){
+	margin-left: 10px;
+}
+.item img{
+	width: 100%;
+}
+.item .price{
+	text-align: center;
+}
+.item .itemName{
+	font-size: 1.5em;
+	text-align: center;
 }
 .navbar{
 	height: 38.52px;
