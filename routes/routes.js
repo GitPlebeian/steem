@@ -291,18 +291,7 @@ router.post("/ban", function(req, res) {
 
 app.set("view engine", "ejs");
 
-// router.get("/", function(req,res){
-// 	res.render("homepage");
-// });
-// router.get("/login", function(req,res){
-// 	res.render("login");
-// });
-// router.get("/signup", function(req,res){
-// 	res.render("signup");
-// });
-// router.get("/discussions", function(req,res){
-// 	res.render("discussions");
-// });
+
 
 
 router.get("/games", function(req, res) {
@@ -315,18 +304,28 @@ router.post('/fileupload', function(req, res){
     form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.path;
     console.log(oldpath)
-    var newpath = __dirname + '/public/images/' + files.filetoupload.name;
+    var newDir = __dirname;
+    var newDir1 = newDir.search("routes");
+    console.log(newDir1);
+    var newDir2 = __dirname.slice(0,newDir1-1);
+    console.log(newDir2)
+    var newpath = newDir2 + '/public/images/' + files.filetoupload.name;
     console.log(newpath)
     var picturei =  '/public/images/' + files.filetoupload.name;
 
-    console.log('in post ' + fields.game + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
+    console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
 
-    db.addObject({game:fields.game,price:fields.price,picture:picturei,description:fields.description});
+    db.addObject({game:fields.name,price:fields.price,picture:picturei,description:fields.description},res);
     fs.rename(oldpath, newpath, function () {
     if (err) throw err;
         res.redirect("/");
       });
     });
+});
+
+outer.get("/games",function(req,res){
+  console.log('getting shroud')
+  res.json(db.getAllObjects());
 });
 
 module.exports = router;

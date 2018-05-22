@@ -43,14 +43,16 @@ myDatabase.prototype.getObjectByName = function(_name,res) {
 
 }
 
-myDatabase.prototype.addObject = function(obj,res) {
-
+myDatabase.prototype.addObject = function(obj) {
+    console.log('adding shroud')
     Info.create(obj,function(error,info) {
         if (error) {
             return res.json(null);
         }
-	  let obj2 = {game:info.game,price:info.price,picture:info.picture,description:info.picture};
-        return res.json(obj2);
+        console.log('no error');
+	      let obj2 = {game:info.game,price:info.price,picture:info.picture,description:info.description};
+        console.log(obj2);
+        return ('monkey');
     });
 }
 
