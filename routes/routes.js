@@ -323,7 +323,7 @@ router.post('/fileupload', function(req, res){
     });
 });
 
-outer.get("/games",function(req,res){
+router.get("/games",function(req,res){
   console.log('getting shroud')
   res.json(db.getAllObjects());
 });
