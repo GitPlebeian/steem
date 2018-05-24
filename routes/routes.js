@@ -373,19 +373,19 @@ router.get("/games", function(req, res) {
     res.render('addObject');
   });
 
+router.get("/newGame", function(req, res) {
+      db.getAllObjects(res);
+  });
+
 router.post('/fileupload', function(req, res){
 
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.path;
-    console.log(oldpath)
     var newDir = __dirname;
     var newDir1 = newDir.search("routes");
-    console.log(newDir1);
     var newDir2 = __dirname.slice(0,newDir1-1);
-    console.log(newDir2)
     var newpath = newDir2 + '/public/images/' + files.filetoupload.name;
-    console.log(newpath)
     var picturei =  '/public/images/' + files.filetoupload.name;
 
     console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
@@ -396,11 +396,6 @@ router.post('/fileupload', function(req, res){
         res.redirect("/");
       });
     });
-});
-
-router.get("/games",function(req,res){
-  console.log('getting shroud')
-  res.json(db.getAllObjects());
 });
 
 module.exports = router;

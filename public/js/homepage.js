@@ -1,3 +1,5 @@
+console.log('shroudpage.js');
+
 var slideIndex = 1;
 showSlides(slideIndex);
 
@@ -37,30 +39,38 @@ if (window.location.href.match('/') != null) {
   })
 }
 
-// $.ajax({
-//       url: "/getItems",
-//       type: "GET",
-//       data: {},
-//       success: function(data){
-//             let currObj = {};
-//             console.log('I hate life ' + JSON.stringify(data));
-//             for(let i = 0;i<data.length;i++) {
-//               if(data[i] != null || data[i] != undefined) {
-//                 currObj = data[i];
-//                 console.log("currObj " + currObj.name);
-//                 $('.allItems').append(
-//                   "<div class=\"item\" id=\"" + currObj.name + "\" itemNumber=\'" + currObj.number +"\'>" +
-//                   "<p class=\"itemName\">" + currObj.name + "</p>" +
-//                   "<img class=\"itemImage\" src=\"" + currObj.picture + "\" alt=\"\">" +
-//                   "<p class=\"price\">$" + currObj.price + "</p>" +
-//                   "<p class=\"description\">" + currObj.description + "</p>" +
-//                   "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\" itemNumber=\'" + currObj.number +"\'>" +
-//                   "</div>");
-//                 }
-//                 else {
-//                   console.log('object is empty');
-//                 }
-//               }
-//             },
-//             dataType: "json"
-//           });
+setTimeout(function(){
+  console.log('setTimeshroud')
+    $.ajax({
+      url: "/newGame",
+      type: "GET",
+      dataType: "json",
+      data: '',
+      timeout: 5000,
+      success: function(data){
+            let currObj = {};
+            console.log('Wheres Shrood');
+            for(let i = 0;i<data.length;i++) {
+                if(data[i] != null || data[i] != undefined) {
+                currObj = data[i];
+                console.log("currObj " + currObj.description);
+                $('.allItems').append(
+                  "<div class=\"item\" id=\"" + currObj.game +"\">" +
+                  "<p class=\"itemName\">" + currObj.game + "</p>" +
+                  "<img class=\"itemImage\" src=\"" + currObj.picture + "\" alt=\"\">" +
+                  "<p class=\"price\">$" + currObj.price + "</p>" +
+                  "<p class=\"description\">" + currObj.price + "</p>" +
+                  "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\">" +
+                  "</div>");
+                 }
+                 else {
+                  console.log('shroud is empty');
+                 }
+              }
+            },
+      error: function(xhr, textStatus, errorThrown){
+       console.log(xhr.status);
+      }
+        
+          });
+},500)

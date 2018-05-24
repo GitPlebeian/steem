@@ -10,12 +10,15 @@ myDatabase.prototype.getAllObjects = function(res) {
 
 Info.find({},function(error,info) {
 	if (error) {
+    console.log('error in getall')
 		return res.json(null);
 	} else {
+    
 		let objs = [];
 		for (let i=0;i<info.length;i++) {
 		    objs.push({game:info[i].game,price:info[i].price,picture:info[i].picture,description:info[i].picture});
 		}
+    console.log('success all')
 		return res.json(objs);
 	}
 });
