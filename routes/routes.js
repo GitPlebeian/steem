@@ -279,8 +279,10 @@ var banned = false;
     console.log(userip[i])
 
       if(userip[i].ipbanned == true || userip[i].banned == true){
+        if(userip[i].username == req.body.username){
         console.log("this user is banned");
-      banned = true;
+        banned = true;
+        }
       }
     
     
