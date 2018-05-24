@@ -106,7 +106,10 @@ console.log("post signup1");
     var newUser = new User({
       username: "admin",
       password: "shroud",
-      admin: true
+      admin: true,
+      ip: "nope",
+      banned:false,
+      ipbanned: false
     });
 
     newUser.save();  
@@ -193,7 +196,30 @@ router.get("/logout", function(req, res) {
 });
 
 router.post("/signup", function(req, res, next) {
-console.log("post signup");
+var ip2 = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
+var newip2 = ip2.slice(7,ip2.length);
+var ipbanned = false;
+// User.findOne({ ip: newip2}, function(err, userip) {
+  User.find({},function(error,userip) {
+    if(error){
+      console.log("error1");
+      return res.json(null);
+    } 
+  for (let i=0;i<userip.length;i++) {
+    console.log(userip[i])
+    
+    if(userip[i].ipbanned == true){
+      if(userip[i].ip == newip2){
+      ipbanned = true;
+      }
+    }
+    
+    
+  }
+
+  });
+if(ipbanned == false){
+console.log("post signupppp");
   
   var username = req.body.username;
   var password = req.body.password;
@@ -216,7 +242,9 @@ console.log("post signup1");
     var newUser = new User({
       username: username,
       password: password,
-      ip: newip
+      ip: newip,
+      banned: false,
+      ipbanned: false
     });
 console.log("post signup2");
 
@@ -224,7 +252,10 @@ console.log("post signup2");
 console.log("post signup done");
 
   });
-
+} else{
+  console.log("no!")
+  return res.json("you have been banned");
+}
 
 }, passport.authenticate("login", {
   successRedirect: "/successsignup",
@@ -234,8 +265,38 @@ console.log("post signup done");
 
 
 
+router.post("/login", function(req, res, next) {
+var ip2 = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
+var newip2 = ip2.slice(7,ip2.length);
+var banned = false;
+// User.findOne({ ip: newip2}, function(err, userip) {
+  User.find({},function(error,userip) {
+    if(error){
+      console.log("error1");
+      return res.json(null);
+    } 
+  for (let i=0;i<userip.length;i++) {
+    console.log(userip[i])
 
-router.post("/login", passport.authenticate("login", {
+      if(userip[i].ipbanned == true || userip[i].banned == true){
+        console.log("this user is banned");
+      banned = true;
+      }
+    
+    
+  }
+
+if(banned == false){
+    next();
+  } else {
+    console.log("no!")
+    return res.json("you have been banned")
+  }
+  });
+  
+  
+
+}, passport.authenticate("login", {
   successRedirect: "/successlogin",
   failureRedirect: "/faillogin",
   failureFlash: true
@@ -268,17 +329,17 @@ router.delete('/deleteLogin/:username', function(req, res){
 //  res.json(db.deleteObjectWithID(req.params.ident));
 });
 
-router.post("/ban", function(req, res) {
+router.put("/ban/:username", function(req, res) {
  console.log("get friends");
   if(req.user.admin == true){
-    User.findOneAndUpdate({ip:req.body.ip},{banned:true},function(error,user) {
+    User.findOneAndUpdate({username:req.params.username},{banned:true},function(error,user) {
           if (error) {
               return res.json(null);
           }
           else if (user == null) {
               return res.json(null);
           }
-          return res.json("success");
+          return res.json({username:req.params.username});
       });
 
 
@@ -288,6 +349,20 @@ router.post("/ban", function(req, res) {
     
 
  });
+
+router.put("/ipBan/:username", function(req,res){
+  if(req.user.admin == true){
+    User.findOneAndUpdate({username:req.params.username},{ipbanned:true},function(error,user) {
+          if (error) {
+              return res.json(null);
+          }
+          else if (user == null) {
+              return res.json(null);
+          }
+          return res.json({username:req.params.username});
+      });
+  }
+});
 
 app.set("view engine", "ejs");
 

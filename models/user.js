@@ -8,8 +8,11 @@ var mongoose = require("mongoose");
 var userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  ip: { type: String, required: true },
   friends: {type: Array, required: false}, 
-  admin: {type: Boolean, required: false} 
+  admin: {type: Boolean, required: false},
+  banned: {type: Boolean, required: true},
+  ipbanned: {type: Boolean, required: true}
 });
 
 

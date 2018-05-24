@@ -5,14 +5,29 @@
 </head>
 <body>
 <div class="admin">
-		<label for="text">Enter a valid username to delete that users account</label> <br> <br>
+        <label for="text">Enter a valid username</label>
+        <br>
+        <br>
+        <br>
         <label for="username">Username:</label>
         <input id="username" type="text" value="" placeholder="Username">
-
         <input id="deleteButton" type="button" value="Delete" >
-        <p id="responseMessage"></p> <br>
-        <p>usernames:</p> <br>
+        <br>
+        <br>
+        <label for="banuser">Ban User:</label>
+        <input id="banuser" type="text" value="" placeholder="Username">
+        <input id="banButton" type="button" value="Ban" >
+        <br>
+        <br>
+        <label for="banuserip">Ban Users Ip:</label>
+        <input id="banuserip" type="text" value="" placeholder="Username">
+        <input id="banipButton" type="button" value="Ban Ip" >
+        <br>
+        <p id="responseMessage"></p>
+        <p>Usernames:</p>
         <p id="usernameList"></p>
+
+
         </div>
         <script src="js/admin.js"></script>
 </body>
