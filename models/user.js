@@ -12,6 +12,8 @@ var userSchema = mongoose.Schema({
   friends: {type: Array, required: false}, 
   admin: {type: Boolean, required: false},
   banned: {type: Boolean, required: true},
+  friends: {type: Array, required: false},
+  request: {type: Array, required: false},
   ipbanned: {type: Boolean, required: true}
 });
 
