@@ -234,7 +234,12 @@ console.log("post signupppp");
     }
 console.log("post signup1");
     var ip = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
-    var newip = ip.slice(7,ip.length)
+    if(ip2.length>7){
+    var newip = ip.slice(7,ip2.length);
+    } else {
+      var newip = ip;
+    }
+
     console.log("ip " + ip);
     console.log("newip " + newip);
 
@@ -267,7 +272,12 @@ console.log("post signup done");
 
 router.post("/login", function(req, res, next) {
 var ip2 = (req.headers['x-forwarded-for'] || req.connection.remoteAddress || '').split(',')[0].trim();
+if(ip2.length>7){
 var newip2 = ip2.slice(7,ip2.length);
+} else{
+  var newip2 = ip2;
+}
+
 var banned = false;
 // User.findOne({ ip: newip2}, function(err, userip) {
   User.find({},function(error,userip) {
