@@ -18,7 +18,7 @@ Info.find({},function(error,info) {
 		for (let i=0;i<info.length;i++) {
 		    objs.push({game:info[i].game,price:info[i].price,picture:info[i].picture,description:info[i].picture});
 		}
-    console.log('success all')
+    console.log('get all')
 		return res.json(objs);
 	}
 });
@@ -47,7 +47,7 @@ myDatabase.prototype.getObjectByName = function(_name,res) {
 }
 
 myDatabase.prototype.addObject = function(obj) {
-    console.log('adding shroud')
+    console.log('adding object')
     Info.create(obj,function(error,info) {
         if (error) {
             return res.json(null);

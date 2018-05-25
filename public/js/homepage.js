@@ -1,4 +1,4 @@
-console.log('shroudpage.js');
+console.log('homepage.js');
 
 var slideIndex = 1;
 showSlides(slideIndex);
@@ -49,7 +49,7 @@ setTimeout(function(){
       timeout: 5000,
       success: function(data){
             let currObj = {};
-            console.log('Wheres Shrood');
+            console.log('In ajax get');
             for(let i = 0;i<data.length;i++) {
                 if(data[i] != null || data[i] != undefined) {
                 currObj = data[i];
@@ -59,7 +59,7 @@ setTimeout(function(){
                   "<p class=\"itemName\">" + currObj.game + "</p>" +
                   "<img class=\"itemImage\" src=\"" + currObj.picture + "\" alt=\"\">" +
                   "<p class=\"price\">$" + currObj.price + "</p>" +
-                  "<p class=\"description\">" + currObj.price + "</p>" +
+                  "<p class=\"description\">" + currObj.description + "</p>" +
                   "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\">" +
                   "</div>");
                  }
