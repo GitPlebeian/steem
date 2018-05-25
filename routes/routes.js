@@ -10,6 +10,7 @@ var bodyParser = require('body-parser')
 var formidable = require('formidable');
 var cookieParser = require("cookie-parser");
 
+var itemNumber = 0;
 var fs = require('fs');
 var app = express();
 var router = express.Router();
@@ -122,6 +123,16 @@ console.log("post signup1");
     res.redirect('/login');
   } else {
     res.render('friends')
+  }
+    
+
+ });
+  router.get("/cart", function(req, res) {
+ console.log("get cart");
+  if(!req.isAuthenticated()){
+    res.redirect('/login');
+  } else {
+    res.render('cart')
   }
     
 
@@ -530,6 +541,8 @@ router.get("/newGame", function(req, res) {
       db.getAllObjects(res);
   });
 
+
+
 router.post('/fileupload', function(req, res){
 
     var form = new formidable.IncomingForm();
@@ -541,9 +554,10 @@ router.post('/fileupload', function(req, res){
     var newpath = newDir2 + '/public/images/' + files.filetoupload.name;
     var picturei =  '/public/images/' + files.filetoupload.name;
 
-    console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
+    console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei + itemNumber);
 
-    db.addObject({game:fields.name,price:fields.price,picture:picturei,description:fields.description},res);
+    db.addObject({game:fields.name,price:fields.price,picture:picturei,description:fields.description,itemNumber:itemNumber},res);
+    itemNumber++;
     fs.rename(oldpath, newpath, function () {
     if (err) throw err;
         res.redirect("/");

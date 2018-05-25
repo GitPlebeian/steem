@@ -6,7 +6,8 @@ var gameSchema = mongoose.Schema({
 	game: String,
 	price: Number,
 	picture: String,
-	description: String
+	description: String,
+	itemNumber: Number
 });
 
 var Game = mongoose.model("Game", gameSchema);
