@@ -16,7 +16,7 @@ Info.find({},function(error,info) {
     
 		let objs = [];
 		for (let i=0;i<info.length;i++) {
-		    objs.push({game:info[i].game,price:info[i].price,picture:info[i].picture,description:info[i].picture});
+		    objs.push({game:info[i].game,price:info[i].price,picture:info[i].picture,description:info[i].description});
 		}
     console.log('get all')
 		return res.json(objs);
