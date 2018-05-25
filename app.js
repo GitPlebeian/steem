@@ -12,6 +12,7 @@ var setUpPassport = require("./setuppassport");
 var routes = require("./routes/routes")
 var itemRoutes = require("./routes/itemRoutes")
 var app = express();
+var User = require("./models/user");
 setUpPassport();
 mongoose.connect("mongodb://localhost:27017/steemdb");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,6 +54,18 @@ var io = require('socket.io').listen(server)
 
 io.on('connection', function(socket){
 	socket.on('chat message', function(msg,username){
-		io.emit('chat message', msg,username)
+		if(msg.includes('<script>') || msg.includes('fuck')){
+		    User.findOneAndUpdate({username:username},{banned:true},function(error,user) {
+		        if (error) {
+		            console.log("error");
+		        }
+		        else if (user == null) {
+		            console.log("user == null");
+		        }
+		       	console.log("success");
+		    });
+		} else {
+			io.emit('chat message', msg,username)
+		}
 	})
 })

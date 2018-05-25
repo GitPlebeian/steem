@@ -10,6 +10,7 @@ var bodyParser = require('body-parser')
 var formidable = require('formidable');
 var cookieParser = require("cookie-parser");
 
+var itemNumber = 0;
 var fs = require('fs');
 var app = express();
 var router = express.Router();
@@ -126,6 +127,16 @@ console.log("post signup1");
     
 
  });
+  router.get("/cart", function(req, res) {
+ console.log("get cart");
+  if(!req.isAuthenticated()){
+    res.redirect('/login');
+  } else {
+    res.render('cart')
+  }
+    
+
+ });
 
  router.get("/signup", function(req, res) {
  console.log("get signup");
@@ -173,14 +184,19 @@ router.get("/session", function(req, res) {
 
 
 router.get("/userInfo",function(req,res){
-  console.log("routes userinfo");
-     if (req.isAuthenticated()) {
-      console.log("I am authenticated");
-		res.json({username:req.user.username,admin:req.user.admin});
-	}
-	else {
-		res.json(null);
-	}
+  if(req.user.banned == true || req.user.ipbanned == true){
+    res.redirect("/logout");
+  } else{
+    console.log("routes userinfo");
+       if (req.isAuthenticated()) {
+        console.log("I am authenticated");
+      res.json({username:req.user.username,admin:req.user.admin});
+    }
+    else {
+      res.json(null);
+    }
+  
+  }
 });
 
 
@@ -375,6 +391,8 @@ router.put("/ipBan/:username", function(req,res){
       });
   }
 });
+
+
 ////////////////////////////////////////////
 router.get("/getRequest/:username",function(req,res){
   User.findOne({username:req.params.username},function(error,user) {
@@ -530,6 +548,8 @@ router.get("/newGame", function(req, res) {
       db.getAllObjects(res);
   });
 
+
+
 router.post('/fileupload', function(req, res){
 
     var form = new formidable.IncomingForm();
@@ -541,9 +561,10 @@ router.post('/fileupload', function(req, res){
     var newpath = newDir2 + '/public/images/' + files.filetoupload.name;
     var picturei =  '/public/images/' + files.filetoupload.name;
 
-    console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei);
+    console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei + itemNumber);
 
-    db.addObject({game:fields.name,price:fields.price,picture:picturei,description:fields.description},res);
+    db.addObject({game:fields.name,price:fields.price,picture:picturei,description:fields.description,itemNumber:itemNumber},res);
+    itemNumber++;
     fs.rename(oldpath, newpath, function () {
     if (err) throw err;
         res.redirect("/");

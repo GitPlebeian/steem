@@ -16,7 +16,8 @@ Info.find({},function(error,info) {
     
 		let objs = [];
 		for (let i=0;i<info.length;i++) {
-		    objs.push({game:info[i].game,price:info[i].price,picture:info[i].picture,description:info[i].description});
+		    objs.push({game:info[i].game,price:info[i].price,picture:info[i].picture,
+          description:info[i].description,itemNumber:info[i].itemNumber});
 		}
     console.log('get all')
 		return res.json(objs);
@@ -53,7 +54,8 @@ myDatabase.prototype.addObject = function(obj) {
             return res.json(null);
         }
         console.log('no error');
-	      let obj2 = {game:info.game,price:info.price,picture:info.picture,description:info.description};
+	      let obj2 = {game:info.game,price:info.price,picture:info.picture,
+          description:info.description, itemNumber: info.itemNumber};
         console.log(obj2);
         return ('monkey');
     });

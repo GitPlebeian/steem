@@ -21,28 +21,8 @@ $('form').submit(function(){
 			if (data && sent) {
 
 				var textStuff = $('#message').val()
-
-				if(textStuff.includes('<script>') || textStuff.includes('fuck')){
-					console.log('a;sldkjr')
-					$.ajax({
-  						url: '/ban/' + data.username,
-  						type: 'PUT',
-  						dataType: 'json',
-  						success: function(data) {
-    						console.log("sucess ban " + data)
-  						},
-  						error: function(xhr, textStatus, errorThrown){
-       						console.log(xhr.status);
-     					}
-					});
-				}
-				username = data.username
-				var html = $('#message').val();
-				var div = document.createElement("div");
-				div.innerHTML = html;
-				var text = div.textContent || div.innerText || "";
-
-				socket.emit('chat message',text,username);
+				var username = data.username;
+				socket.emit('chat message',textStuff,username);
   				$('#message').val('');
 
   				numSent++;

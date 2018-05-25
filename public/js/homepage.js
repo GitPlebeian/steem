@@ -39,6 +39,7 @@ if (window.location.href.match('/') != null) {
   })
 }
 
+
 setTimeout(function(){
   console.log('setTimeshroud')
     $.ajax({
@@ -55,13 +56,12 @@ setTimeout(function(){
                 currObj = data[i];
                 console.log("currObj " + currObj.description);
                 $('.allItems').append(
-                  "<div class=\"item\" id=\"" + currObj.game +"\">" +
+                  "<div class=\"item\" id=\"" + currObj.game +"\" itemNumber=\'" + currObj.number +"\'>" +
                   "<p class=\"itemName\">" + currObj.game + "</p>" +
                   "<img class=\"itemImage\" src=\"" + currObj.picture + "\" alt=\"\">" +
                   "<p class=\"price\">$" + currObj.price + "</p>" +
                   "<p class=\"description\">" + currObj.description + "</p>" +
-                  "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\">" +
-                  "</div>");
+                  "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\" itemNumber =\'" + currObj.number + "\'></div>");
                  }
                  else {
                   console.log('shroud is empty');
@@ -74,3 +74,4 @@ setTimeout(function(){
         
           });
 },500)
+
