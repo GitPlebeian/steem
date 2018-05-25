@@ -342,7 +342,7 @@ router.delete('/deleteLogin/:username', function(req, res){
 });
 
 router.put("/ban/:username", function(req, res) {
- console.log("get friends");
+ console.log("getting BANNED");
   if(req.user.admin == true){
     User.findOneAndUpdate({username:req.params.username},{banned:true},function(error,user) {
           if (error) {

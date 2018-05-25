@@ -23,7 +23,18 @@ $('form').submit(function(){
 				var textStuff = $('#message').val()
 
 				if(textStuff.includes('<script>') || textStuff.includes('fuck')){
-					alert('You have been banned')
+					console.log('a;sldkjr')
+					$.ajax({
+  						url: '/ban/' + data.username,
+  						type: 'PUT',
+  						dataType: 'json',
+  						success: function(data) {
+    						console.log("sucess ban " + data)
+  						},
+  						error: function(xhr, textStatus, errorThrown){
+       						console.log(xhr.status);
+     					}
+					});
 				}
 				username = data.username
 				var html = $('#message').val();
