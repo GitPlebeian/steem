@@ -176,7 +176,7 @@ router.get("/userInfo",function(req,res){
   console.log("routes userinfo");
      if (req.isAuthenticated()) {
       console.log("I am authenticated");
-		res.json({username:req.user.username});
+		res.json({username:req.user.username,admin:req.user.admin});
 	}
 	else {
 		res.json(null);
