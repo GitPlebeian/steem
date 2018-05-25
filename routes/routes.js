@@ -375,6 +375,147 @@ router.put("/ipBan/:username", function(req,res){
       });
   }
 });
+////////////////////////////////////////////
+router.get("/getRequest/:username",function(req,res){
+  User.findOne({username:req.params.username},function(error,user) {
+  if (error) {
+    return res.json(null);
+  }
+  else {
+//  else if(){
+//     for (let i=0;i<user.request.length;i++) {
+//
+//         if(req.params.username == user.request[i] || req.params.username == "admin" ||
+//         req.params.username == req.user.username )
+//           {
+//             return res.json(null);
+//           }
+//
+//     }
+// //  }
+// for (let j=0;j<user.friends.length;j++) {
+//   if(req.params.username == user.friends[j])
+//     {
+//       return res.json(null);
+//     }
+// }
+
+    let objs = [];
+    for (let i=0;i<user.request.length;i++) {
+      // console.log(user.request[i]);
+      // console.log(user[i].request);
+
+      objs.push({username:user.request[i]});
+    }
+    return res.json(objs);
+  }
+});
+});
+router.delete('/remove/:username', function(req, res){
+  User.findOneAndUpdate({username:req.user.username},{ $pull: { request: { $in: [req.params.username]} } } ,function(error,removed) {
+       if (error) {
+         console.log("error");
+       }
+       return res.json(req.params.username);
+   });
+
+});
+router.put('/accept/:username', function(req, res){
+
+  User.findOneAndUpdate({username:req.user.username},{$push: {friends: req.params.username}},function(error,user) {
+        if (error) {
+          console.log("normal error");
+            return res.json(null);
+
+        }
+        else if (user == null) {
+            console.log("info null error");
+            return res.json(null);
+
+        }
+        User.findOneAndUpdate({username:req.params.username},{$push: {friends: req.user.username}},function(error,user) {
+
+        if (error) {
+          console.log("normal error");
+            return res.json(null);
+
+        }
+        else if (user == null) {
+            console.log("info null error");
+            return res.json(null);
+
+        }
+
+        return res.json(req.params.username);
+        });
+    });
+
+
+  });
+
+router.put('/requestFriend/:username', function(req, res){
+console.log(req.params.username);
+    User.findOne({username:req.params.username},function(err,before) {
+      if(err){
+        console.log("normal error");
+          return res.json(null);
+      }
+      else if(!before){
+          return res.json(null);
+      }
+      else if(req.params.username == "admin")
+      {
+        return res.json(null);
+      }
+      else if(req.params.username == req.user.username) {
+        return res.json("yourself");
+      }
+      else{
+        console.log(before);
+        for (let i=0;i<before.request.length;i++) {
+          console.log(before.request[i] + "looped");
+            if(req.user.username == before.request[i])
+              {
+                console.log(before.request[i]);
+                console.log("nulling at request");
+                return res.json("sent already");
+              }
+
+        }
+    }
+
+        User.findOne({username:req.user.username},function(err,before) {
+          if(err){
+            return res.json(null);
+          }
+        for (let j=0;j<before.friends.length;j++) {
+          console.log(before.friends[j]);
+          if(req.params.username == before.friends[j])
+            {
+              console.log("nulling at friend");
+              return res.json("friends");
+            }
+        }
+
+
+  User.findOneAndUpdate({username:req.params.username},{$push: {request: req.user.username}},function(error,user) {
+        if (error) {
+          console.log("normal error");
+            return res.json(null);
+
+        }
+        else if (user == null) {
+            console.log("info null error");
+            return res.json(null);
+
+        }
+        return res.json(req.params.username);
+    });
+});
+});
+//  res.json(db.deleteObjectWithID(req.params.ident));
+});
+////////////////////////////////////////////
 
 app.set("view engine", "ejs");
 
