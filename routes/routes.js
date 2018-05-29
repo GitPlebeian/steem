@@ -356,87 +356,87 @@ router.get("/getUsernames", function(req, res) {
 
 });
 ///////////////////////////////////
-// router.get("/cart", function(req, res) {
-//   console.log("get cart");
-//   if (!req.isAuthenticated()) {
-//     res.redirect('/login');
-//   } else {
-//     res.render('cart')
-//   }
-// });
-// router.post('/cart', function(req, res) {
+router.get("/cart", function(req, res) {
+  console.log("get cart");
+  if (!req.isAuthenticated()) {
+    res.redirect('/login');
+  } else {
+    res.render('cart')
+  }
+});
+router.post('/cart', function(req, res) {
 
-//   User.findOne({
-//     username: req.user.username
-//   }, function(err, user) {
-//     for (var i = 0; i < user.cart.length; i++) {
-//       if (user.cart[i] == req.body.title) {
-//         return res.json("already")
-//       }
-//     }
+  User.findOne({
+    username: req.user.username
+  }, function(err, user) {
+    for (var i = 0; i < user.cart.length; i++) {
+      if (user.cart[i] == req.body.title) {
+        return res.json("already")
+      }
+    }
 
-//     //var obj = {name:req.body.itemName, index: req.body.index, price: req.body.price,username:req.session_state.username};
-//     User.findOneAndUpdate({
-//       username: req.user.username
-//     }, {
-//       $push: {
-//         cart: req.body.title
-//       }
-//     }, function(error, user) {
-//       if (error) {
-//         return res.json(null)
-//       }
+    //var obj = {name:req.body.itemName, index: req.body.index, price: req.body.price,username:req.session_state.username};
+    User.findOneAndUpdate({
+      username: req.user.username
+    }, {
+      $push: {
+        cart: req.body.title
+      }
+    }, function(error, user) {
+      if (error) {
+        return res.json(null)
+      }
 
-//       User.findOneAndUpdate({
-//         username: req.user.username
-//       }, {
-//         $push: {
-//           price: req.body.price
-//         }
-//       }, function(error, user) {
-//         if (error) {
-//           return res.json(null)
-//         }
-//         var temp = [{
-//           title: req.body.title,
-//           price: req.body.price
-//         }];
+      User.findOneAndUpdate({
+        username: req.user.username
+      }, {
+        $push: {
+          price: req.body.price
+        }
+      }, function(error, user) {
+        if (error) {
+          return res.json(null)
+        }
+        var temp = [{
+          title: req.body.title,
+          price: req.body.price
+        }];
 
-//         return res.json(temp);
+        return res.json(temp);
 
-//       });
-//     });
-//     //return res.json(db3.addObject(obj));
-
-
-//   });
-// });
+      });
+    });
+    //return res.json(db3.addObject(obj));
 
 
-// router.get('/cart2', function(req, res) {
-//   User.findOne({
-//     username: req.user.username
-//   }, function(err, user) {
-//     if (err) {
-//       console.log(err)
-//     }
-//     var temp = [];
-//     for (var i = 0; i < user.cart.length; i++) {
-//       temp.push({
-//         title: user.cart[i],
-//         price: user.price[i]
-//       })
-//     }
-//     return res.json(temp)
-//   });
+  });
+});
 
 
-// });
-// router.delete('/cart', function(req, res) {
+router.get('/cart2', function(req, res) {
+  User.findOne({
+    username: req.user.username
+  }, function(err, user) {
+    if (err) {
+      console.log(err)
+    }
+    var temp = [];
+    for (var i = 0; i < user.cart.length; i++) {
+      temp.push({
+        title: user.cart[i],
+        price: user.price[i]
+      })
+    }
+    return res.json(temp)
+  });
 
 
-//   res.json(db3.deleteObjectWithID(req.body.index));
-// });
+});
+router.delete('/cart', function(req, res) {
+
+
+  res.json(db3.deleteObjectWithID(req.body.index));
+});
 /////////////////////////////////////////////
 router.delete('/deleteLogin/:username', function(req, res) {
 
@@ -748,6 +748,10 @@ router.post('/fileupload', function(req, res) {
     var picturei = '/public/images/' + files.filetoupload.name;
 
     console.log('in post ' + fields.name + ' ' + fields.price + ' ' + fields.description + ' ' + picturei + itemNumber);
+
+    if(fields.description.includes('<script') || fields.name.includes('<script')){
+      return
+    }
 
     db.addObject({
       game: fields.name,

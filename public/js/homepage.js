@@ -35,6 +35,10 @@ if (window.location.href.match('/') != null) {
       $("#logout").css('display','block');
       $('#login').css('display', 'none')
       $('#signup').css('display', 'none')
+      $('#addGame').css('display', 'block')
+      $('#friends').css('display', 'block')
+      $('#cart').css('display', 'block')
+      $('#discus').css('display', 'block')
     }
   })
 }

@@ -10,7 +10,6 @@ function cartClicked(itemNum,price){
                 alert ("Please log in");
               }
               else if(data == "already"){
-                alert ("Item has already been added to your cart");
               }
 
             },
