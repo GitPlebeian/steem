@@ -10,12 +10,13 @@ var bodyParser = require('body-parser')
 var formidable = require('formidable');
 var cookieParser = require("cookie-parser");
 
-var itemNumber = 0;
+var itemNumber = 7;
 var fs = require('fs');
 var app = express();
 var router = express.Router();
 router.use(flash());
 var User = require("../models/user");
+var Game = require("../models/games");
 
 var data = require('../mongo')
 let db = new data();
@@ -673,6 +674,67 @@ router.get("/newGame", function(req, res) {
   db.getAllObjects(res);
 });
 
+obj = [{
+  game: "CSGO",
+  price: 15,
+  picture: "/public/images/CSGO.jpg",
+  description: "Cool FPS Game",
+  itemNumber: 1
+}, {
+  game: "ORCS MUST DIE 2",
+  price: 15,
+  picture: "/public/images/ORCS.jpg",
+  description: "Cool ORCS Game",
+  itemNumber: 2
+}, {
+  game: "PUBG",
+  price: 30,
+  picture: "/public/images/PUBG.jpg",
+  description: "Cool BattleRoyale Game",
+  itemNumber: 3
+}, {
+  game: "Rocket League",
+  price: 20,
+  picture: "/public/images/rocketleague.jpg",
+  description: "Cool Car Game",
+  itemNumber: 4
+}, {
+  game: "StarDew Valley",
+  price: 15,
+  picture: "/public/images/stardewvalley.jpg",
+  description: "Cool Farm Game",
+  itemNumber: 5
+}, {
+  game: "The Forest",
+  price: 25,
+  picture: "/public/images/theforest.jpg",
+  description: "Cool Forest Game",
+  itemNumber: 6
+}]
+for (let i = 0; i < obj.length; i++) {
+  Game.findOne({
+    game: obj[i].name
+  }, function(err, game) {
+    if (err) {
+      return next(err);
+    }
+    if (game) {
+      return;
+    }
+    console.log("post signup1");
+
+    var newGame = new Game({
+      game: obj[i].game,
+      price: obj[i].price,
+      picture: obj[i].picture,
+      description: obj[i].description,
+      itemNumber: obj[i].itemNumber
+    });
+
+    newGame.save();
+
+  });
+}
 
 router.post('/fileupload', function(req, res) {
 
