@@ -61,7 +61,7 @@ setTimeout(function(){
                   "<img class=\"itemImage\" src=\"" + currObj.picture + "\" alt=\"\">" +
                   "<p class=\"price\">$" + currObj.price + "</p>" +
                   "<p class=\"description\">" + currObj.description + "</p>" +
-                  "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\" itemNumber =\'" + currObj.number + "\'></div>");
+                  "<input type=\"button\" class=\"cartButton\" value=\"Add to Cart\" itemTitle =\'" + currObj.game + "\' price =\'" + currObj.price + "\'></div>");
                  }
                  else {
                   console.log('shroud is empty');
