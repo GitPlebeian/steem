@@ -1,14 +1,15 @@
-function cartClicked(itemNum){
+function cartClicked(itemNum,price){
+  console.log("inside cartClicked");
           $.ajax({
             url: "/cart",
             type: "POST",
-            data: {itemName: $('.item[itemNumber=\'' + itemNum + '\'] .itemName').text(), index: itemNum, price: $('.item[itemNumber=\'' + itemNum + '\'] .price').text()},
+            data: {title: itemNum, price: price},
             success: function(data){
               console.log(data + " post success");
-              if(data == null){
+              if(!data){
                 alert ("Please log in");
               }
-              else if(data == "fail"){
+              else if(data == "already"){
                 alert ("Item has already been added to your cart");
               }
 
@@ -52,7 +53,7 @@ $.ajax({
       }
 
       else {
-        $('#myTable').append('<tr class="tablerows" itemNumber="' + data[i].index+ '"><tbody><td>' + data[i].name + '</td>><td>' + data[i].price + '</td><td>' + '<input type="number" class="quant" itemNumber = "' + data[i].index + '" value="1" min="1" />' + '</td><td>' + '<div class="delete" style="height: 21px; width: 54px; background-color: red;" itemNumber = "' + data[i].index + '"></div>' + '</td></tbody></tr>' );
+        $('#myTable').append('<tr class="tablerows" itemNumber="' + data[i].index+ '"><tbody><td>' + data[i].title + '</td>><td>' + data[i].price + '</td><td>' + '<input type="number" class="quant" itemNumber = "' + data[i].index + '" value="1" min="1" />' + '</td><td>' + '<div class="delete" style="height: 21px; width: 54px; background-color: red;" itemNumber = "' + data[i].index + '"></div>' + '</td></tbody></tr>' );
       }
     }
 
@@ -68,11 +69,13 @@ return false;
 
 
 var itemN;
+var price;
       //$(".cartButton").click(function(){
         $(document).on("click",".cartButton", function(){
         console.log("cart button was clicked");
-   itemN = $(this).attr('itemNumber');
-  cartClicked(itemN);
+   itemN = $(this).attr('itemTitle');
+   price = $(this).attr('price');
+  cartClicked(itemN,price);
 
 });
 //////////If the html = /cart then do the below
