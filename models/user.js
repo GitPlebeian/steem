@@ -13,7 +13,9 @@ var userSchema = mongoose.Schema({
   admin: {type: Boolean, required: false},
   banned: {type: Boolean, required: true},
   request: {type: Array, required: false},
-  ipbanned: {type: Boolean, required: true}
+  ipbanned: {type: Boolean, required: true},
+  cart: {type: Array, required: false},
+   price: {type: Array, required: false}
 });
 
 
